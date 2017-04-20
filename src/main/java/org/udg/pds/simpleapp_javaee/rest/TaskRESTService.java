@@ -39,7 +39,8 @@ public class TaskRESTService extends RESTService {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response listAllTasks(@Context HttpServletRequest req) {
+  public Response listAllTasks(@Context HttpServletRequest req,
+                               @QueryParam("from") Date from) {
     Long userId = getLoggedUser(req);
 
     return buildResponse(taskService.getTasks(userId));
