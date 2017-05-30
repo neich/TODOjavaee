@@ -4,11 +4,21 @@ This is a JavaEE application that implements an pure API REST for a TODO appicat
 
 The main three tiers used are:
 
-- REST tiers (JAX-RS)
-- Business tier (EJB)
-- Persistence tier (JPA)
+* REST tier (JAX-RS)
+* Business tier (EJB)
+* Persistence tier (JPA)
 
-It uses Swarm to produce an jar file than can be executed standalone without an application server.
+Other JAva EE APIs used:
 
+* Bean validation
+* Exception Mappers
+* CDI
+
+It uses [Swarm](http://wildfly-swarm.io/) to produce an jar file than can be executed standalone without an application server:
+
+```
+mvn package
+java -jar target/TODOjavaee-swarm.jar
+```
 
 Collaborations are welcome
