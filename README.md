@@ -8,4 +8,7 @@ The main three tiers used are:
 - Business tier (EJB)
 - Persistence tier (JPA)
 
+It uses Swarm to produce an jar file than can be executed standalone without an application server.
+
+
 Collaborations are welcome
