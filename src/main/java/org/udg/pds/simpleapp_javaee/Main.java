@@ -17,39 +17,24 @@ public class Main {
 
     Swarm swarm = new Swarm();
 
+    // Create mysql datasource fraction
     swarm.fraction(datasourceWithMysql());
     driverModule = "com.mysql";
 
     // Start the swarm
     swarm.start();
     JAXRSArchive appDeployment = ShrinkWrap.create(JAXRSArchive.class);
+
+    // Add classes
     appDeployment.addPackages(true, "org.udg.pds.simpleapp_javaee.model");
     appDeployment.addPackages(true, "org.udg.pds.simpleapp_javaee.rest");
     appDeployment.addPackages(true, "org.udg.pds.simpleapp_javaee.service");
     appDeployment.addPackages(true, "org.udg.pds.simpleapp_javaee.util");
 
-/*
-    appDeployment.addResource(MyApplication.class);
-    appDeployment.addResource(RESTService.class);
-    appDeployment.addResource(UserRESTService.class);
-    appDeployment.addResource(TaskRESTService.class);
-    appDeployment.addResource(TagRESTService.class);
-
-    appDeployment.addResource(UserService.class);
-    appDeployment.addResource(TaskService.class);
-    appDeployment.addResource(TagService.class);
-
-    appDeployment.addResource(User.class);
-    appDeployment.addResource(Task.class);
-    appDeployment.addResource(Tag.class);
-*/
-
-    appDeployment.addAllDependencies();
-
+    // Add mysql module
     appDeployment.addModule(driverModule);
 
-    // appDeployment.addAsResource("persistence.xml");
-    // appDeployment.addAsManifestResource("META-INF/persistence.xml", "persistence.xml");
+    // Add WEBINF resources
     appDeployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
     appDeployment.addAsWebInfResource(new ClassLoaderAsset("import.sql", Main.class.getClassLoader()), "classes/import.sql");
 
