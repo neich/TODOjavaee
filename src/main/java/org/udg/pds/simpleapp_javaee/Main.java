@@ -52,9 +52,9 @@ public class Main {
         })
         .dataSource("MySQLDS", (ds) -> {
           ds.driverName("com.mysql");
-          ds.connectionUrl("jdbc:mysql://localhost:3306/pdsdb?autoReconnect=true&useSSL=false");
-          ds.userName("pdsdb");
-          ds.password("pdsdb");
+          ds.connectionUrl("jdbc:mysql://mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/wjj76o5oofvkt9if");
+          ds.userName("qw2n88n736dihu4w");
+          ds.password("z8lnxctqqg7d0wgr");
         });
   }
 
