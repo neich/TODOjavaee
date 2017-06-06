@@ -5,10 +5,10 @@
 
   <groupId>org.udg.pds</groupId>
   <artifactId>TODOjavaee</artifactId>
-  <version>0.0.1</version>
-  <packaging>jar</packaging>
-  <name>TODO JavaEE</name>
-  <description>An example application using Java EE</description>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>PDS TODO JavaEE</name>
+  <description>Punt de partida pel projecte de PDS</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,6 +16,13 @@
     <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
         resources, i.e. build is platform dependent! -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- JBoss dependency versions -->
+
+    <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+
+    <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
+    <version.jboss.bom>9.0.0.Final</version.jboss.bom>
 
     <!-- other plugin versions -->
     <version.compiler.plugin>3.1</version.compiler.plugin>
@@ -25,57 +32,68 @@
     <!-- maven-compiler-plugin -->
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <version.wildfly.swarm>2017.5.0</version.wildfly.swarm>
   </properties>
-
-
 
   <dependencyManagement>
     <dependencies>
+      <!-- Define the version of JBoss' Java EE 7 APIs we want to import.
+          Any dependencies from org.jboss.spec will have their version defined by this
+          BOM -->
+      <!-- JBoss distributes a complete set of Java EE 7 APIs including
+          a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
+          a collection) of artifacts. We use this here so that we always get the correct
+          versions of artifacts. Here we use the jboss-javaee-7.0-with-tools stack
+          (you can read this as the JBoss stack of the Java EE 7 APIs, with some extras
+          tools for your project, such as Arquillian for testing) and the jboss-javaee-7.0-with-hibernate
+          stack you can read this as the JBoss stack of the Java EE 7 APIs, with extras
+          from the Hibernate family of projects) -->
       <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>bom</artifactId>
-        <version>${version.wildfly.swarm}</version>
-        <scope>import</scope>
+        <groupId>org.wildfly.bom</groupId>
+        <artifactId>jboss-javaee-7.0-wildfly-with-tools</artifactId>
+        <version>${version.jboss.bom}</version>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
+
   <dependencies>
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jaxrs</artifactId>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jaxrs-cdi</artifactId>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>ejb</artifactId>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>cdi</artifactId>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson2-provider</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jpa</artifactId>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+      <scope>provided</scope>
     </dependency>
-
+    <!-- Import the EJB API, we use provided scope as the API is included in JBoss WildFly -->
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jsf</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>container</artifactId>
+      <groupId>org.jboss.spec.javax.ejb</groupId>
+      <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -85,19 +103,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jaxrs-multipart</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>datasources</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.42</version>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-joda</artifactId>
+      <version>2.4.1</version>
     </dependency>
 
   </dependencies>
@@ -108,23 +116,77 @@
     <finalName>${project.artifactId}</finalName>
     <plugins>
       <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
-        <version>${version.wildfly.swarm}</version>
-
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${version.war.plugin}</version>
         <configuration>
-          <mainClass>org.udg.pds.simpleapp_javaee.Main</mainClass>
+          <!-- Java EE 7 doesn't require web.xml, Maven needs to catch
+              up! -->
+          <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
-
-        <executions>
-          <execution>
-            <goals>
-              <goal>package</goal>
-            </goals>
-          </execution>
-        </executions>
+      </plugin>
+      <!-- WildFly plugin to deploy war -->
+      <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <version>${version.wildfly.maven.plugin}</version>
+      </plugin>
+      <!-- Compiler plugin enforces Java 1.6 compatibility and activates
+          annotation processors -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.compiler.plugin}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <!-- The default profile skips all tests, though you can tune
+          it to run just unit tests based on a custom pattern -->
+      <!-- Seperate profiles are provided for running all tests, including
+          Arquillian tests that execute in the specified container -->
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${version.surefire.plugin}</version>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
+      <!-- Use this profile for any OpenShift specific customization your app will need. -->
+      <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
+      <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+      <id>openshift</id>
+      <build>
+        <finalName>jbosswildfly</finalName>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>${version.war.plugin}</version>
+            <configuration>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
+              <outputDirectory>deployments</outputDirectory>
+              <warName>ROOT</warName>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 
 </project>
