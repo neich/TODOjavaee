@@ -6,7 +6,7 @@
   <groupId>org.udg.pds</groupId>
   <artifactId>TODOjavaee</artifactId>
   <version>0.0.1</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>TODO JavaEE</name>
   <description>An example application using Java EE</description>
 
@@ -20,15 +20,12 @@
     <!-- other plugin versions -->
     <version.compiler.plugin>3.1</version.compiler.plugin>
     <version.surefire.plugin>2.10</version.surefire.plugin>
-    <version.war.plugin>2.5</version.war.plugin>
 
     <!-- maven-compiler-plugin -->
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <version.wildfly.swarm>2017.5.0</version.wildfly.swarm>
+    <version.wildfly.swarm>2018.1.0</version.wildfly.swarm>
   </properties>
-
-
 
   <dependencyManagement>
     <dependencies>
@@ -43,14 +40,11 @@
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jaxrs</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jaxrs-cdi</artifactId>
+      <artifactId>container</artifactId>
+      <version>${version.wildfly.swarm}</version>
     </dependency>
 
     <dependency>
@@ -69,19 +63,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>jsf</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>container</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.10</version>
+      <version>1.7.12</version>
     </dependency>
 
     <dependency>
@@ -103,26 +87,27 @@
   </dependencies>
 
   <build>
-    <!-- Set the name of the war, used as the context root when the app
-       is deployed -->
     <finalName>${project.artifactId}</finalName>
     <plugins>
       <plugin>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>wildfly-swarm-plugin</artifactId>
         <version>${version.wildfly.swarm}</version>
-
-        <configuration>
-          <mainClass>org.udg.pds.simpleapp_javaee.Main</mainClass>
-        </configuration>
-
         <executions>
           <execution>
+            <id>package</id>
             <goals>
               <goal>package</goal>
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
       </plugin>
     </plugins>
   </build>
