@@ -23,7 +23,8 @@ public class LoggingFilter implements ContainerResponseFilter {
     // String json = IOUtils.toString(requestContext.getEntityStream());
     Object entity = responseContext.getEntity();
     if (entity != null) {
-      logger.info("Response " + new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(entity));
+      String response = new ObjectMapper().writeValueAsString(entity).replace("\\\"", "\"");
+      logger.info("Response: " + response);
     }
 
   }
