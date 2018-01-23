@@ -11,9 +11,7 @@
          can find it in the source at src/main/webapp/WEB-INF/kitchensink-quickstart-ds.xml -->
     <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
     <properties>
-      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-      <property name="hibernate.hbm2ddl.import_files" value="import.sql"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>
