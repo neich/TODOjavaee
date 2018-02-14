@@ -29,28 +29,19 @@ public class TaskService {
 
   public Collection<Task> getTasks(Long id) {
     Collection<Task> tl = null;
-    try {
       User u = em.find(User.class, id);
+      if (u == null)
+        throw new EJBException("User does not exists");
       tl = u.getTasks();
       return tl;
-    } catch (Exception ex) {
-      // Very important: if you want that an exception reaches the EJB caller, you have to throw an EJBException
-      // We catch the normal exception and then transform it in a EJBException
-      throw new EJBException(ex);
-    }
   }
 
   public Task getTask(Long userId, Long id) {
-    try {
       Task t = em.find(Task.class, id);
+      if (t == null) throw new EJBException("Task does not exists");
       if (t.getUser().getId() != userId)
-        throw new Exception("User does not own this task");
+        throw new EJBException("User does not own this task");
       return t;
-    } catch (Exception ex) {
-      // Very important: if you want that an exception reaches the EJB caller, you have to throw an EJBException
-      // We catch the normal exception and then transform it in a EJBException
-      throw new EJBException(ex);
-    }
   }
 
   public Task getTaskComplete(Long id) {
