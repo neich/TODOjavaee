@@ -1,11 +1,11 @@
 project:
-  stage: production
+  stage: heroku
 swarm:
   datasources:
     data-sources:
       MySQLDS:
         driver-name: com.mysql
-        connection-url: jdbc:mysql://mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/wjj76o5oofvkt9if
+        connection-url: jdbc:mysql://mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/wjj76o5oofvkt9if?useSSL=false
         user-name: qw2n88n736dihu4w
         password: z8lnxctqqg7d0wgr
     jdbc-drivers:
