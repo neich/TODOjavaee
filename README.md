@@ -21,6 +21,10 @@ mvn package
 java -jar target/TODOjavaee-swarm.jar
 ```
 
-Collaborations are welcome
+## Heroku
 
-**WARNING**: the project includes IntelliJ IDEA configuration files. They are not needed but they provide running configurations out of the box if you use this IDE. All the configuration files are in ```.gitignore``` in order to avoid updating these files.
+The app is ready to deploy into [Heroku](http://heroku.com) with the ```web``` profile. There is a file ```Procfile``` with the command line arguments to start the jar, and there is a ```project-heroku.yml``` stage file (at ```src/main/resources```) with the Heroku specific configuration. You **must** change the database information in this file to match yours.
+
+#### Collaborations are welcome!
+
+**WARNING**: the project includes IntelliJ IDEA configuration files. They are not needed but they provide running configurations out of the box if you use this IDE
