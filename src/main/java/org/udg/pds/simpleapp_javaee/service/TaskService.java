@@ -24,9 +24,6 @@ public class TaskService {
   @EJB
   protected TagService tagService;
 
-  @EJB
-  protected UserService userService;
-
   public Collection<Task> getTasks(Long id) {
     Collection<Task> tl = null;
       User u = em.find(User.class, id);
