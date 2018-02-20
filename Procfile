@@ -1,1 +1,1 @@
-web: java -Dswarm.http.port=$PORT -jar target/TODOjavaee-swarm.jar
+web: java -Dswarm.http.port=$PORT -Dswarm.project.stage=production -jar target/TODOjavaee-swarm.jar

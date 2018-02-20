@@ -11,3 +11,14 @@ swarm:
         driver-class-name: com.mysql.jdbc.Driver
         xa-datasource-class-name: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
         driver-module-name: com.mysql
+---
+project:
+  stage: production
+swarm:
+  datasources:
+    data-sources:
+      MySQLDS:
+        driver-name: com.mysql
+        connection-url: jdbc:mysql://mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/wjj76o5oofvkt9if
+        user-name: qw2n88n736dihu4w
+        password: z8lnxctqqg7d0wgr
