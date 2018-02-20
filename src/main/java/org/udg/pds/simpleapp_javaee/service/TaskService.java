@@ -44,19 +44,6 @@ public class TaskService {
       return t;
   }
 
-  public Task getTaskComplete(Long id) {
-    try {
-      Task t = em.find(Task.class, id);
-      String email = t.getUser().getEmail();
-      return t;
-    } catch (Exception ex) {
-      // Very important: if you want that an exception reaches the EJB caller, you have to throw an EJBException
-      // We catch the normal exception and then transform it in a EJBException
-      throw new EJBException(ex);
-    }
-  }
-
-
   public Task addTask(String text, Long userId,
                       Date created, Date limit) {
     try {
@@ -79,17 +66,15 @@ public class TaskService {
 
   public RESTService.ID remove(Long taskId) {
     Task t = em.find(Task.class, taskId);
+    if (t == null) throw new EJBException("Task does not exists");
     em.remove(t);
     return new RESTService.ID(taskId);
   }
 
   public void addTagsToTask(Long userId, Long taskId, Collection<Long> tags) {
-    Task t;
-    try {
-      t = em.find(Task.class, taskId);
-    } catch (Exception e) {
-      throw new EJBException("Task don't exists");
-    }
+    Task t = em.find(Task.class, taskId);
+
+    if (t == null) throw new EJBException("Task don't exists");
 
     if (t.getUser().getId() != userId)
       throw new EJBException("This user is not the owner of the task");
