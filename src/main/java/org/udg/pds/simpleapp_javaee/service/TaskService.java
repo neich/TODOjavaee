@@ -25,12 +25,9 @@ public class TaskService {
   protected TagService tagService;
 
   public Collection<Task> getTasks(Long id) {
-    Collection<Task> tl = null;
-      User u = em.find(User.class, id);
-      if (u == null)
-        throw new EJBException("User does not exists");
-      tl = u.getTasks();
-      return tl;
+    User u = em.find(User.class, id);
+    if (u == null) throw new EJBException("User does not exists");
+    return u.getTasks();
   }
 
   public Task getTask(Long userId, Long id) {
