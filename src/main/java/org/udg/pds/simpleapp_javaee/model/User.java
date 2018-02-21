@@ -61,36 +61,12 @@ public class User implements Serializable {
     return password;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public Collection<Task> getTasks() {
     // Since tasks is collection controlled by JPA, it has LAZY loading by default. That means
     // that you have to query the object (calling size(), for example) to get the list initialized
     // More: http://www.javabeat.net/jpa-lazy-eager-loading/
     tasks.size();
     return tasks;
-  }
-
-  public void setTasks(List<Task> ts) {
-    this.tasks = ts;
   }
 
   public void addTask(Task task) {

@@ -64,38 +64,6 @@ public class Task implements Serializable {
     this.id = id;
   }
 
-  public String getText() {
-    return text;
-  }
-
-  public void setText(String s) {
-    text = s;
-  }
-
-  public Date getDateCreated() {
-    return dateCreated;
-  }
-
-  public void setDateCreated(Date dateCreated) {
-    this.dateCreated = dateCreated;
-  }
-
-  public Date getDateLimit() {
-    return dateLimit;
-  }
-
-  public void setDateLimit(Date dateLimit) {
-    this.dateLimit = dateLimit;
-  }
-
-  public Boolean getCompleted() {
-    return completed;
-  }
-
-  public void setCompleted(Boolean completed) {
-    this.completed = completed;
-  }
-
   public User getUser() {
     return user;
   }
