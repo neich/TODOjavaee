@@ -49,7 +49,7 @@ public class UserRESTService extends RESTService {
     Long loggedUserId = getLoggedUser(req);
 
     if (!loggedUserId.equals(userId))
-      throw new WebApplicationException("Cannot delet other users!");
+      throw new WebApplicationException("You cannot delete other users!");
 
     return buildResponse(userService.remove(userId));
   }
