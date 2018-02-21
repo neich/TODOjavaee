@@ -17,10 +17,7 @@ import java.util.Map;
 
 @Path("/images")
 @RequestScoped
-public class ImageRESTService {
-
-  @Inject
-  ToJSON toJSON;
+public class ImageRESTService extends RESTService {
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
