@@ -24,9 +24,6 @@ public class TaskRESTService extends RESTService {
   @EJB
   TaskService taskService;
 
-  @Inject
-  ToJSON toJSON;
-
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)

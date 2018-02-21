@@ -26,9 +26,6 @@ public class UserRESTService extends RESTService {
   @EJB
   UserService userService;
 
-  @Inject
-  ToJSON toJSON;
-
   @POST
   @Path("auth")
   @Consumes(MediaType.APPLICATION_JSON)

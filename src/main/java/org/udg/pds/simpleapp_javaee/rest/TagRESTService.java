@@ -21,9 +21,6 @@ public class TagRESTService extends RESTService {
   @EJB
   TagService tagService;
 
-  @Inject
-  ToJSON toJSON;
-
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
