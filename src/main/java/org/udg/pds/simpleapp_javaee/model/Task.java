@@ -80,4 +80,12 @@ public class Task implements Serializable {
     tags.size();
     return tags;
   }
+
+  public Boolean getCompleted() {
+    return completed;
+  }
+
+  public String getText() {
+    return text;
+  }
 }
