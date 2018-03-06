@@ -96,6 +96,7 @@
           <element id="library" level="project" name="Maven: org.wildfly.swarm:datasources:2018.1.0" />
           <element id="library" level="project" name="Maven: org.jboss.ironjacamar:ironjacamar-jdbc:1.4.6.Final" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.42" />
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.2.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

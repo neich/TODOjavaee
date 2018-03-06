@@ -124,5 +124,6 @@
     <orderEntry type="library" name="Maven: org.wildfly.swarm:datasources:2018.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.ironjacamar:ironjacamar-jdbc:1.4.6.Final" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.42" level="project" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.1" level="project" />
   </component>
 </module>
