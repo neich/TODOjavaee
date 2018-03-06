@@ -18,7 +18,7 @@ public class UserService {
   private EntityManager em;
 
   public User matchPassword(String username, String password) {
-    Query q = em.createQuery("select u from User u where u.username=:username");
+    Query q = em.createQuery("select u from users u where u.username=:username");
     q.setParameter("username", username);
 
     User u;
