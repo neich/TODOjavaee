@@ -4,12 +4,13 @@ swarm:
   datasources:
     data-sources:
       MySQLDS:
-        driver-name: com.mysql
-        connection-url: jdbc:mysql://mgs0iaapcj3p9srz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/wjj76o5oofvkt9if?useSSL=false
-        user-name: qw2n88n736dihu4w
-        password: z8lnxctqqg7d0wgr
+        driver-name: org.postgresql
+        connection-url: jdbc:postgresql://ec2-23-23-177-166.compute-1.amazonaws.com:5432/d400618rmaik5u
+        user-name: qzrddeoxbrpgev
+        password: 2d6f05087274951d662596815ce92d0bdf5eb6185c7cf64b1741ad6f27fc96b5
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
     jdbc-drivers:
-      com.mysql:
-        driver-class-name: com.mysql.jdbc.Driver
-        xa-datasource-class-name: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
-        driver-module-name: com.mysql
+      org.postgresql:
+        driver-class-name: org.postgresql.Driver
+        xa-datasource-class-name: org.postgresql.xa.PGXADataSource
+        driver-module-name: org.postgresql
