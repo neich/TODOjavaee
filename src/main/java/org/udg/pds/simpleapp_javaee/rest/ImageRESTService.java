@@ -2,6 +2,7 @@ package org.udg.pds.simpleapp_javaee.rest;
 
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.udg.pds.simpleapp_javaee.util.Global;
 import org.udg.pds.simpleapp_javaee.util.ToJSON;
 
 import javax.enterprise.context.RequestScoped;
@@ -18,6 +19,9 @@ import java.util.Map;
 @Path("/images")
 @RequestScoped
 public class ImageRESTService extends RESTService {
+
+  @Inject
+  Global global;
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
@@ -39,7 +43,7 @@ public class ImageRESTService extends RESTService {
         // Handle the body of that part with an InputStream
         InputStream istream = inputPart.getBody(InputStream.class, null);
 
-        fileName = System.getenv("OPENSHIFT_DATA_DIR") + fileName;
+        fileName = global.getDataDir() + fileName;
 
         saveFile(istream, fileName);
 
