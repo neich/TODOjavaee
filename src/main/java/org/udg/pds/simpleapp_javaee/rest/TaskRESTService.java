@@ -1,6 +1,7 @@
 package org.udg.pds.simpleapp_javaee.rest;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.udg.pds.simpleapp_javaee.model.Views;
 import org.udg.pds.simpleapp_javaee.rest.serializer.JsonDateDeserializer;
 import org.udg.pds.simpleapp_javaee.service.TaskService;
 import org.udg.pds.simpleapp_javaee.util.ToJSON;
@@ -40,7 +41,8 @@ public class TaskRESTService extends RESTService {
                                @QueryParam("from") Date from) {
     Long userId = getLoggedUser(req);
 
-    return buildResponse(taskService.getTasks(userId));
+    return buildResponseWithView(Views.Private.class,
+            taskService.getTasks(userId));
   }
 
   @POST
@@ -60,7 +62,8 @@ public class TaskRESTService extends RESTService {
       throw new WebApplicationException("No limit date supplied");
     }
 
-    return buildResponse(taskService.addTask(task.text, userId, task.dateCreated, task.dateLimit));
+    return buildResponseWithView(Views.Private.class,
+            taskService.addTask(task.text, userId, task.dateCreated, task.dateLimit));
   }
 
   @DELETE
