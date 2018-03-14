@@ -1,6 +1,7 @@
 package org.udg.pds.simpleapp_javaee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.udg.pds.simpleapp_javaee.rest.serializer.JsonDateDeserializer;
@@ -49,11 +50,15 @@ public class Task implements Serializable {
   private String text;
 
   @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "fk_user")
   private User user;
 
-  @JsonIgnore
-  @ManyToMany
+  @Column(name = "fk_user", insertable = false, updatable = false)
+  private long userId;
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JsonView({Views.UserProfile.class})
   private Collection<Tag> tags;
 
   public Long getId() {
@@ -87,5 +92,9 @@ public class Task implements Serializable {
 
   public String getText() {
     return text;
+  }
+
+  public long getUserId() {
+    return userId;
   }
 }
