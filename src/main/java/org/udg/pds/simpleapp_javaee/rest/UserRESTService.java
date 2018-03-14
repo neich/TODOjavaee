@@ -3,11 +3,9 @@ package org.udg.pds.simpleapp_javaee.rest;
 import org.udg.pds.simpleapp_javaee.model.User;
 import org.udg.pds.simpleapp_javaee.model.Views;
 import org.udg.pds.simpleapp_javaee.service.UserService;
-import org.udg.pds.simpleapp_javaee.util.ToJSON;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -63,10 +61,22 @@ public class UserRESTService extends RESTService {
     try {
       Long userId = getLoggedUser(req);
     } catch (WebApplicationException ex) {
-      return buildResponse(userService.register(ru.username, ru.email, ru.password));
+      return buildResponseWithView(Views.Private.class,
+              userService.register(ru.username, ru.email, ru.password));
     }
 
     throw new WebApplicationException("Cannot register while user is logged in");
+  }
+
+  @GET
+  @Path("/me")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getUserProfile(@Context HttpServletRequest req) {
+
+    Long loggedUserId = getLoggedUser(req);
+
+    return buildResponseWithView(Views.UserProfile.class,
+            userService.getUserProfile(loggedUserId));
   }
 
   static class LoginUser {
