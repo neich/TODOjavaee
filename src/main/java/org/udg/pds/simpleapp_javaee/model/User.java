@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Entity(name = "users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email", "username"}))
@@ -46,7 +45,7 @@ public class User implements Serializable {
   private String password;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  @JsonView(Views.Complete.class)
+  @JsonView(Views.UserProfile.class)
   private Collection<Task> tasks;
 
   public Long getId() {
