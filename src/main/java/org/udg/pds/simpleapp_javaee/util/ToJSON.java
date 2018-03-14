@@ -10,6 +10,7 @@ import org.udg.pds.simpleapp_javaee.model.Error;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -17,6 +18,7 @@ import java.io.StringWriter;
  * @author imartin
  */
 @Singleton
+@Startup
 public class ToJSON {
 
   ObjectMapper mapper;
