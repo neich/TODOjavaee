@@ -1,5 +1,6 @@
 package org.udg.pds.simpleapp_javaee.service;
 
+import org.udg.pds.simpleapp_javaee.model.Task;
 import org.udg.pds.simpleapp_javaee.model.User;
 import org.udg.pds.simpleapp_javaee.rest.RESTService;
 
@@ -59,6 +60,13 @@ public class UserService {
 
   public User getUser(long id) {
     return em.find(User.class, id);
+  }
+
+  public User getUserProfile(long id) {
+    User u = this.getUser(id);
+    for (Task t : u.getTasks())
+        t.getTags();
+    return u;
   }
 
   public RESTService.ID remove(Long userId) {
