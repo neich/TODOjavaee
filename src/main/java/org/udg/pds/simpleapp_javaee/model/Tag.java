@@ -1,5 +1,9 @@
 package org.udg.pds.simpleapp_javaee.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.udg.pds.simpleapp_javaee.rest.serializer.JsonDateSerializer;
+import org.udg.pds.simpleapp_javaee.rest.serializer.JsonTagSerializer;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +11,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@JsonSerialize(using = JsonTagSerializer.class)
 @Entity
 // This tells JAXB that it has to ignore getters and setters and only use fields for JSON marshaling/unmarshaling
 public class Tag implements Serializable {
@@ -47,4 +52,8 @@ public class Tag implements Serializable {
   public Long getId() {
     return id;
   }
+
+    public String getDescription() {
+        return description;
+    }
 }
