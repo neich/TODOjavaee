@@ -54,9 +54,9 @@ public class RESTService {
     return Response.ok(o).build();
   }
 
-  protected Response buildResponseWithView(Class<?> view, User u) {
+  protected Response buildResponseWithView(Class<?> view, Object o) {
     try {
-      return Response.ok(toJSON.Object(view, u)).build();
+      return Response.ok(toJSON.Object(view, o)).build();
     } catch (IOException e) {
       throw new WebApplicationException("Error serializing response with view");
     }
