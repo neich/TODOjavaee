@@ -6,22 +6,38 @@ import io.minio.MinioClient;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
+import org.apache.log4j.Logger;
 
 @Singleton
 @Startup
 public class Global {
     private MinioClient minioClient;
+    private String minioBucket;
+    private String BASE_URL;
 
-    private static String BASE_URL;
+    @Inject
+    private Logger logger;
 
     @PostConstruct
     void init() {
+        String minioURL = null;
+        String minioAccessKey = null;
+        String minioSecretKey = null;
+
         try {
-            String minioURL = System.getProperty("swarm.project.minio.url");
-            String minioAccessKey = System.getProperty("swarm.project.minio.access-key");
-            String minioSecretKey = System.getProperty("swarm.project.minio.secret-key");
+            minioURL = System.getProperty("swarm.project.minio.url");
+            minioAccessKey = System.getProperty("swarm.project.minio.access-key");
+            minioSecretKey = System.getProperty("swarm.project.minio.secret-key");
             minioClient = new MinioClient(minioURL, minioAccessKey, minioSecretKey);
+            minioBucket = System.getProperty("swarm.project.minio.bucket");
         } catch (Exception e) {
+            logger.warn("Cannot initialize minio service with url:" + minioURL + ", access-key:" + minioAccessKey + ", secret-key:" + minioSecretKey);
+        }
+
+        if (minioBucket == null) {
+            logger.warn("Cannot initialize minio bucket: " + minioBucket);
+            minioClient = null;
         }
 
         if (System.getProperty("swarm.project.base-url") != null)
