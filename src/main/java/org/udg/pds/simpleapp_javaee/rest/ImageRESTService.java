@@ -37,8 +37,12 @@ public class ImageRESTService extends RESTService {
     public Response upload(@Context HttpServletRequest req,
                            MultipartFormDataInput input) {
 
-        Map<String, List<InputPart>> formParts = input.getFormDataMap();
         MinioClient minioClient = global.getMinioClient();
+        if (minioClient == null)
+            throw new WebApplicationException("Minio client not configured");
+
+        Map<String, List<InputPart>> formParts = input.getFormDataMap();
+
 
         List<String> images = new ArrayList<>();
 
@@ -75,6 +79,9 @@ public class ImageRESTService extends RESTService {
     public Response download(@PathParam("filename") String filename) {
 
         MinioClient minioClient = global.getMinioClient();
+        if (minioClient == null)
+            throw new WebApplicationException("Minio client not configured");
+
         try {
             InputStream file = minioClient.getObject("pds", filename);
             return Response.ok(IOUtils.toByteArray(file)).type("image/png").build();
