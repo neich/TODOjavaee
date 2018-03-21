@@ -58,14 +58,10 @@ public class UserRESTService extends RESTService {
   @Produces(MediaType.APPLICATION_JSON)
   public Response register(RegisterUser ru, @Context HttpServletRequest req) {
 
-    try {
-      Long userId = getLoggedUser(req);
-    } catch (WebApplicationException ex) {
-      return buildResponseWithView(Views.Private.class,
+    checkNotLoggedIn(req);
+    return buildResponseWithView(Views.Private.class,
               userService.register(ru.username, ru.email, ru.password));
-    }
 
-    throw new WebApplicationException("Cannot register while user is logged in");
   }
 
   @GET
