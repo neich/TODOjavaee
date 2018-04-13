@@ -4,13 +4,21 @@ package org.udg.pds.simpleapp_javaee.util;
 import io.minio.MinioClient;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.DependsOn;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
+import org.udg.pds.simpleapp_javaee.model.User;
+import org.udg.pds.simpleapp_javaee.service.TaskService;
+import org.udg.pds.simpleapp_javaee.service.UserService;
+
+import java.util.Date;
 
 @Singleton
 @Startup
+@DependsOn({"UserService", "TaskService"})
 public class Global {
     private MinioClient minioClient;
     private String minioBucket;
@@ -18,6 +26,12 @@ public class Global {
 
     @Inject
     private Logger logger;
+
+    @EJB
+    UserService userService;
+
+    @EJB
+    TaskService taskService;
 
     @PostConstruct
     void init() {
@@ -46,9 +60,16 @@ public class Global {
             String port = System.getProperty("swarm.http.port") != null ? System.getProperty("swarm.http.port") : "8080";
             BASE_URL = "http://localhost:" + port;
         }
+
+        initData();
     }
 
-    public MinioClient getMinioClient() {
+  private void initData() {
+    User u = userService.register("usuari", "usuari@hotmail.com", "123456");
+    taskService.addTask("Una tasca", u.getId(), new Date(), new Date());
+  }
+
+  public MinioClient getMinioClient() {
         return minioClient;
     }
 
