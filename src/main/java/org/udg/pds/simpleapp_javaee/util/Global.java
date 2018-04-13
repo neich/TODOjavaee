@@ -10,15 +10,19 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
+import org.udg.pds.simpleapp_javaee.model.Tag;
+import org.udg.pds.simpleapp_javaee.model.Task;
 import org.udg.pds.simpleapp_javaee.model.User;
+import org.udg.pds.simpleapp_javaee.service.TagService;
 import org.udg.pds.simpleapp_javaee.service.TaskService;
 import org.udg.pds.simpleapp_javaee.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Singleton
 @Startup
-@DependsOn({"UserService", "TaskService"})
+//@DependsOn({"UserService", "TaskService"})
 public class Global {
     private MinioClient minioClient;
     private String minioBucket;
@@ -32,6 +36,9 @@ public class Global {
 
     @EJB
     TaskService taskService;
+
+    @EJB
+    TagService tagService;
 
     @PostConstruct
     void init() {
@@ -65,8 +72,10 @@ public class Global {
     }
 
   private void initData() {
-    User u = userService.register("usuari", "usuari@hotmail.com", "123456");
-    taskService.addTask("Una tasca", u.getId(), new Date(), new Date());
+    User user = userService.register("usuari", "usuari@hotmail.com", "123456");
+    Task task = taskService.addTask("Una tasca", user.getId(), new Date(), new Date());
+    Tag tag = tagService.addTag("ATag", "Just a tag");
+    taskService.addTagsToTask(user.getId(), task.getId(), new ArrayList<Long>() {{ add(tag.getId()); }});
   }
 
   public MinioClient getMinioClient() {
