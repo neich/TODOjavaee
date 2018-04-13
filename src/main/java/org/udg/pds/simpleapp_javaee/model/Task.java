@@ -9,6 +9,7 @@ import org.udg.pds.simpleapp_javaee.rest.serializer.JsonDateSerializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -59,7 +60,7 @@ public class Task implements Serializable {
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JsonView({Views.UserProfile.class})
-  private Collection<Tag> tags;
+  private Collection<Tag> tags = new ArrayList<>();
 
   public Long getId() {
     return id;
