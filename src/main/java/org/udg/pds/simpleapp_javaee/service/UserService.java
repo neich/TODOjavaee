@@ -37,21 +37,16 @@ public class UserService {
 
   public User register(String username, String email, String password) {
 
-    Query q = em.createQuery("select u from User u where u.email=:email");
+    Query q = em.createQuery("select u from users u where u.email=:email");
     q.setParameter("email", email);
-    try {
-      User u = (User) q.getSingleResult();
-    } catch (Exception e) {
+    if (q.getResultList().size() > 0)
       throw new EJBException("Email already exist");
-    }
 
-    q = em.createQuery("select u from User u where u.username=:username");
+
+    q = em.createQuery("select u from users u where u.username=:username");
     q.setParameter("username", username);
-    try {
-      User u = (User) q.getSingleResult();
-    } catch (Exception e) {
+    if (q.getResultList().size() > 0)
       throw new EJBException("Username already exists");
-    }
 
     User nu = new User(username, email, password);
     em.persist(nu);
