@@ -70,9 +70,4 @@ public class UserService {
     return new RESTService.ID(userId);
   }
 
-  public User getUserComplete(Long loggedId) {
-    User u = getUser(loggedId);
-    u.getTasks().size();
-    return u;
-  }
 }
