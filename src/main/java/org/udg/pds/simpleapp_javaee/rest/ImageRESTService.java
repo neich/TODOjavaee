@@ -59,7 +59,7 @@ public class ImageRESTService extends RESTService {
 
                     String objectName = imgName + "." + inputPart.getMediaType().getSubtype();
                     // Upload the file to the bucket with putObject
-                    minioClient.putObject("pds",
+                    minioClient.putObject(global.getMinioBucket(),
                             objectName,
                             istream,
                             contentType);
@@ -83,7 +83,7 @@ public class ImageRESTService extends RESTService {
             throw new WebApplicationException("Minio client not configured");
 
         try {
-            InputStream file = minioClient.getObject("pds", filename);
+            InputStream file = minioClient.getObject(global.getMinioBucket(), filename);
             return Response.ok(IOUtils.toByteArray(file)).type("image/png").build();
         } catch (Exception e) {
             throw new WebApplicationException("Error downloading file: " + e.getMessage());
