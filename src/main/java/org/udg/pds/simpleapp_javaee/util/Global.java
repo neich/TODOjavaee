@@ -82,5 +82,7 @@ public class Global {
         return minioClient;
     }
 
+    public String getMinioBucket() { return minioBucket; }
+
     public String getBaseURL() { return BASE_URL; }
 }
